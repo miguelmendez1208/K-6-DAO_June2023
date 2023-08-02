@@ -5,6 +5,7 @@ import Web3 from "web3";
 import getRewardBalance from "./utils/getRewardBalance";
 import getMintedTokens from "./utils/getMintedTokens";
 import getAccountBalance from "./utils/getAccountBalance";
+import StudentRegistrationForm from "./StudentRegistrationForm";
 
 
 const Minter = (props) => {
@@ -20,6 +21,8 @@ const Minter = (props) => {
     const [rewardBalance, setRewardBalance] = useState("");
     const [mintedTokens, setMintedTokens] = useState([]);
     const [minting, setMinting] = useState(false);
+
+
 
 
     useEffect(() => {
@@ -42,7 +45,7 @@ const Minter = (props) => {
     }, []);
 
     function addWalletListener() {
-        if (window.ethereum) {
+        if (window.ethereum) { //if wallet
             window.ethereum.on("accountsChanged", (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
@@ -57,7 +60,7 @@ const Minter = (props) => {
                     setBalance("");
                 }
             });
-        } else {
+        } else { //else download metamask
             setStatus(
                 <p>
                     {" "}
@@ -173,6 +176,12 @@ const Minter = (props) => {
             <p id="status">
                 {status}
             </p>
+
+            <div>
+      <h1>Student Registration</h1>
+      <StudentRegistrationForm />
+    </div>
+
 
             <h2>Minted Tokens </h2>
             <ul>
