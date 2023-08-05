@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { mintNFTnoIPFS } from "./utils/interact";
 
 const StudentRegistrationForm = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,23 @@ const StudentRegistrationForm = () => {
     walletAddress: '',
     subjects: [],
   });
+
+  const [minting, setMinting] = useState(false);
+  const [balance, setBalance] = useState("");
+  const [status, setStatus] = useState("");
+  const [rewardBalance, setRewardBalance] = useState("");
+  const [mintedTokens, setMintedTokens] = useState(false);
+  const [url, setUrl] = useState("");
+
+  const onJsonMintPressed = async () => { //TODO: implement
+    setMinting(true); // Start loading at the beginning of the operation
+    const { status } = await mintNFTnoIPFS(url, "testname", "testdescription");
+    setStatus(status);
+    setMinting(false); // End loading after the operation is performed
+    setRewardBalance(rewardBalance);
+    setMintedTokens(mintedTokens);
+};
+
 
   const [subject, setSubject] = useState('');
 
@@ -67,6 +85,7 @@ const StudentRegistrationForm = () => {
     const res = await axios(config);
     console.log(res.data);
     console.log(res.data.IpfsHash);
+    setUrl(res.data.IpfsHash);
   };
 
   return (
